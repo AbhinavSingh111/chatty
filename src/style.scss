@@ -115,6 +115,8 @@
         .sidebar {
             flex: 1;
             background-color: #3e3c61;
+            
+            
 
             .navbar {
                display: flex;
@@ -124,6 +126,9 @@
                padding: 10px;
                justify-content: space-between;
                color: #ddddf7; 
+               
+               
+               
             
 
             .logo {
@@ -131,6 +136,7 @@
             }
             
             .user {
+                
                 display: flex;
                 gap: 10px;
 
@@ -153,7 +159,9 @@
             }
                 
             }
+            
             .search {
+                
                 border-bottom: 1px solid gray;
 
                 .searchForm {
@@ -171,14 +179,16 @@
                     }
                 }
             }
-
+            overflow-y: scroll;
             .userChat {
+                
                 padding: 10px;
                 display: flex;
                 align-items: center;
                 gap: 10px;
                 color: white;
                 cursor: pointer;
+                
 
                 &:hover {
                     background-color: #2f2d52;
@@ -191,6 +201,7 @@
                 }
 
                 .userChatInfo {
+                    
                     span{font-style: 18px; font-weight: 500;}
                     p{font-style: 14px; color: lightgray;}
                 }
@@ -200,6 +211,8 @@
         }
         .chat {
             flex: 2;
+            
+            
 
             .chatInfo {
                 height: 50px;

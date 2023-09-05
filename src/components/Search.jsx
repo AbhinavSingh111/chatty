@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState } from 'react';
 import { collection, query, where,getDoc, getDocs, setDoc, doc, updateDoc, serverTimestamp } from "firebase/firestore";
 import {db} from '../firebase';
 import {AuthContext} from '../context/AuthContext';
@@ -6,7 +6,7 @@ import {AuthContext} from '../context/AuthContext';
 const Search = () => {
 
   const [username , setUsername] = useState('');
-  const [user , setUser] = useState(null);
+  const [user , setUser] = useState(undefined);
   const [err , setErr] = useState(false);
 
   const {currentUser} = useContext(AuthContext);
@@ -20,7 +20,8 @@ const Search = () => {
       querySnapshot.forEach((doc) => {
       setUser(doc.data());
       });
-    } catch {
+    } catch (error){
+      console.error("error form search line 24", error);
       setErr(true);
     }
     
@@ -44,9 +45,9 @@ const Search = () => {
           [combinedId+'.userInfo']:{
             uid:user.uid,
             displayName: user.displayName,
-            photoURL : user.photoURL
+            photoURL : user.photoURL,
           },
-          [combinedId+'.date'] : serverTimestamp()
+          [combinedId+'.date'] : serverTimestamp(),
         }
         );
 
@@ -54,17 +55,18 @@ const Search = () => {
           [combinedId+'.userInfo']:{
             uid:currentUser.uid,
             displayName: currentUser.displayName,
-            photoURL : currentUser.photoURL
+            photoURL : currentUser.photoURL,
           },
-          [combinedId+'.date'] : serverTimestamp()
+          [combinedId+'.date'] : serverTimestamp(),
         }
         );
       }
-    }catch {
+    }catch (error){
+      console.error("error form inpur line 63", error);
       setErr(true);
     }
 
-    setUser(null);
+    setUser(undefined);
     setUsername('');
   };
 
@@ -80,14 +82,15 @@ const Search = () => {
 
       {err && <span>User not found.</span>}
 
-      {user && <div className="userChat" onClick={handleSelect}>
+      {user && (<div className="userChat" onClick={handleSelect}>
         <img src={user.photoURL} alt="" />
         <div className="userChatInfo">
           <span>{user.displayName}</span>
         </div>
-      </div>}
+      </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;

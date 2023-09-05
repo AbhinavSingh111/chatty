@@ -1,7 +1,6 @@
-import { onAuthStateChanged } from "firebase/auth";
-import { createContext, useEffect, useReducer, useState ,useContext} from "react";
+import { createContext, useReducer ,useContext} from "react";
 import {AuthContext} from '../context/AuthContext';
-import { auth } from "../firebase";
+
 
 export const ChatContext = createContext();
 
@@ -17,8 +16,8 @@ export const ChatContextProvider = ({children}) => {
         switch (action.type) {
             case 'CHANGE_USER':
                 return {
-                    user:action.payload,
-                    chatId:currentUser.uid > action.payload.uid ? currentUser.uid + action.payload.uid : action.payload.uid + currentUser.uid,
+                    user: action.payload,
+                    chatId: currentUser.uid > action.payload.uid ? currentUser.uid + action.payload.uid : action.payload.uid + currentUser.uid,
                 };
             default:
                 return state;

@@ -1,5 +1,5 @@
-import React, { useState,useContext, useEffect } from 'react'
-import Message from './Message'
+import React, { useState,useContext, useEffect } from 'react';
+import Message from './Message';
 import { ChatContext } from '../context/ChatContext';
 import { doc, onSnapshot } from 'firebase/firestore';
 import {db} from '../firebase';
@@ -9,15 +9,21 @@ const Messages = () => {
 
   const {data} = useContext(ChatContext);
 
-  useEffect(()=>{
-    const unSub = onSnapshot(doc(db,'chats',data.chatId), (doc)=> {
-      doc.exists() && setMessages(doc.data().messages)
-    })
-
-    return () => {
-      unSub()
-    }
-  },[data.chatId])
+  try {
+    useEffect(()=>{
+      const unSub = onSnapshot(doc(db,'chats',data.chatId), (doc)=> {
+        doc.exists() && setMessages(doc.data().messages);
+      });
+  
+      return () => {
+        unSub()
+      };
+    },[data.chatId]);
+    
+  } catch (error) {
+    console.log("messages not present in firebase");
+  }
+  
 
 
   return (
@@ -29,4 +35,4 @@ const Messages = () => {
   );
 };
 
-export default Messages
+export default Messages;

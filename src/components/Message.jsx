@@ -1,4 +1,4 @@
-import React ,{ useContext, useEffect, useRef, useState } from 'react'
+import React ,{ useContext, useEffect, useRef } from 'react';
 import { ChatContext } from '../context/ChatContext';
 import {AuthContext} from '../context/AuthContext';
 
@@ -9,11 +9,15 @@ const Message = ({message}) => {
 
   const ref = useRef();
 
-  useEffect(()=>{
-    ref.current?.scrollIntoView({behavior:'smooth'})
-  },[message])
+  try {
+    useEffect(()=>{
+      ref.current?.scrollIntoView({behavior:'smooth'});
+    },[message]);
+  } catch (error) {
+    console.log("messages not present in firebase , coming from message");
+  }
+  
 
-  console.log(message);
   return (
     <div ref={ref} className={`message ${message.senderId === currentUser.uid && 'owner'}`}>
       <div className="messageInfo">
@@ -21,13 +25,13 @@ const Message = ({message}) => {
         <span>just now</span>
       </div>
       <div className="messageContent">
-        <p>{message.text}</p>
-        {message && <img src={message.img} alt="" />}
+        <p>{message.text && message.text}</p>
+        {message.img && <img src={message.img} alt="" />}
 
       </div>
 
     </div>
-  )
-}
+  );
+};
 
-export default Message
+export default Message;
